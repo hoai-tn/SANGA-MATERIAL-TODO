@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     withStyles,
     Button
@@ -9,19 +9,29 @@ import Grid from '@material-ui/core/Grid';
 
 import {STATUSES} from '../../constants';
 import TaskList from '../../components/TaskList';
+import TaskForm from '../../components/TaskForm';
 
 const TaskBoard = (props) => {
+    const [open, setOpen] = useState(false);
+    const handleClouse = () => {
+        setOpen(false)
+    }
     const {classes} = props;
     return (
         <div className={classes.taskboard}>
-            <Button variant="contained" color="primary">
+            <Button 
+                onClick={() => setOpen(true)}
+                variant="contained" 
+                color="primary">
                 <i className="material-icons">library_add</i>
                 Insert
             </Button>
             {renderBoard()}
+            <TaskForm open={open} handleClouse={handleClouse}/>
         </div>
     )
 }
+
 let listTasks = [
     {
         id: 0,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -7,14 +7,15 @@ import {
     Button,
     TextField
 } from '@material-ui/core';
-const index = ({open, handleClouse }) => {
+const index = (props) => {
+    const {open, handleClouse } = props;
     return ( 
         <Dialog 
             open = { open }
             onClose = {handleClouse }
             arialabelledby = "alert-dialog-title"
             ariadescribedby = "alert-dialog-description" >
-            <DialogTitle DialogTitle id = "alert-dialog-title" > { "Use Google's location service?"} </DialogTitle> 
+            <DialogTitle DialogTitle id = "alert-dialog-title" > { 'Use Google s location service?'} </DialogTitle> 
             <DialogContent >
                 <TextField 
                     id = "standard-multiline-flexible" 
@@ -33,7 +34,7 @@ const index = ({open, handleClouse }) => {
                 </Button> 
             </DialogActions>
         </Dialog>
-    )
-}
+    );
+};
 
-export default index
+export default index;

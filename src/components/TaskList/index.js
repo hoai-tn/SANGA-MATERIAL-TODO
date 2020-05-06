@@ -24,4 +24,4 @@ const index = ({status, listTasksFilter}) => {
     )
 }
 
-export default index
+export default index;

@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import configureStore from '../../redux/configureStore';
 const store = configureStore();
 function App(props) {
-    console.log(store);
     return (
        <Provider store={store}>
             <ThemeProvider theme={theme}>

@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
-const rootReducers = combineReducers({})
+import taskReducer from './tasks';
+const rootReducers = combineReducers({
+    task: taskReducer
+})
 
 export default rootReducers;

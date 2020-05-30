@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     withStyles,
     Button
@@ -11,26 +11,11 @@ import {STATUSES} from '../../constants';
 import TaskList from '../../components/TaskList';
 import TaskForm from '../../components/TaskForm';
 
-const TaskBoard = (props) => {
-    const [open, setOpen] = useState(false);
-    const handleClouse = () => {
-        setOpen(false)
-    }
-    const {classes} = props;
-    return (
-        <div className={classes.taskboard}>
-            <Button 
-                onClick={() => setOpen(true)}
-                variant="contained" 
-                color="primary">
-                <i className="material-icons">library_add</i>
-                Insert
-            </Button>
-            {renderBoard()}
-            <TaskForm open={open} handleClouse={handleClouse}/>
-        </div>
-    )
-}
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../../actions/task';
+
+import PropTypes from 'prop-types';
 
 let listTasks = [
     {
@@ -50,6 +35,7 @@ let listTasks = [
         status: 2
     }
 ]
+
 const renderBoard = () => {
     let xhtml = null;
     xhtml = (
@@ -69,4 +55,57 @@ const renderBoard = () => {
     return xhtml; 
 }
 
-export default withStyles(styles)(TaskBoard);
+const TaskBoard = (props) => {
+    const [open, setOpen] = useState(false);
+
+    const handleClouse = () => {
+        setOpen(false)
+    }
+    const {classes} = props;
+
+    useEffect(() => {
+        const { taskActions } = props ;
+        taskActions.fectListTaskRequest();
+        
+    }, []);
+   
+    return (
+        <div className={classes.taskboard}>
+            <Button 
+                onClick={() => setOpen(true)}
+                variant="contained" 
+                color="primary">
+                <i className="material-icons">library_add</i>
+                Insert
+            </Button>
+            {renderBoard()}
+            <TaskForm open={open} handleClouse={handleClouse}/>
+        </div>
+    )
+}
+
+TaskBoard.propTypes = {
+    classes: PropTypes.object,
+    taskActions: PropTypes.shape({
+        fectListTask: PropTypes.func
+    })
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        listTask: state.task
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        taskActions: bindActionCreators(Actions, dispatch)
+    }
+}
+
+export default  withStyles(styles)
+(connect(
+    mapStateToProps, 
+    mapDispatchToProps,)
+    (TaskBoard)
+);
